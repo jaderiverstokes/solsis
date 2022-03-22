@@ -12,7 +12,7 @@ console.log("hi");
 
 //create a connection of devnet
 const createConnection = () => {
-    return new Connection(clusterApiUrl("devnet"));
+    return new Connection(clusterApiUrl("mainnet-beta"));
 };
 
 const getProvider = () => {
@@ -29,7 +29,9 @@ const connectData = true;
 const getAllNftData = async () => {
     try {
         if (connectData === true) {
-            const connect = createConnectionConfig(clusterApiUrl());
+            const connect = createConnectionConfig(
+                clusterApiUrl("mainnet-beta")
+            );
             const provider = getProvider();
             console.log("provider", provider);
             let ownerToken = provider.publicKey;
@@ -37,6 +39,7 @@ const getAllNftData = async () => {
             console.log(ownerToken);
             const result = isValidSolanaAddress(ownerToken);
             console.log("result", result);
+            console.log(await connect.getAccountInfo(provider.publicKey));
             const nfts = await getParsedNftAccountsByOwner({
                 publicAddress: ownerToken,
                 connection: connect,
